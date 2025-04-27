@@ -1,60 +1,67 @@
+// API classını import et
 import { API } from "./api.js";
+// UI classını import et
 import { UI } from "./ui.js";
 
+// API Clasını kullanabilmek için bunun örneğini al
 const api = new API();
+
+// UI classını kullanabilmek için bunun bir örneğini al
 const ui = new UI();
 
+// ! Sayfa yüklendiği an api isteği at
 document.addEventListener("DOMContentLoaded", async () => {
-  // Show the loader initially
+  // Loaderı render et
   ui.renderLoader();
-
-  // Fetch popular songs
+  // Api'dan şarkı verilerini al ve data değişkenine ata
   const songs = await api.getPopular();
-
-  // Render the songs
+  // Api'dan gelen veri ile cardları renderla
   ui.renderCards(songs);
 });
 
+// ! Form gönderildiğine inputtaki değere eriş ve api'dan inputtaki kelimeye ait şarkıları al
 ui.form.addEventListener("submit", async (e) => {
-  // Prevent page refresh when the form is submitted
+  // Form gönderildiğinde sayfa yenilemesini engelle
   e.preventDefault();
-
-  // Get the value from the input when the form is submitted
+  // Form gönderildiğinde inputtaki değere eriş
   const query = e.target[0].value;
 
-  // If the query is empty, don't make the API request
+  // Eğer query değeri yoksa api isteği atma
   if (!query.trim()) {
-    alert("Please enter a valid search term!");
+    alert("Lütfen geçerli bir arama işlemi gerçekleştiriniz!!");
 
-    // Stop the function
+    // Fonksiyonu durdur
     return;
   }
 
-  // Render the loader
+  // Loaderı render et
+
   ui.renderLoader();
 
-  // Dynamically update the title
+  // Title'ı dinamik şekilde renderla
   ui.title.innerText = `Results for ${query}`;
 
-  // Make the API request with the query from the form and assign the returned data to 'songs'
+  // Form içerisinden elde edilen query değeri ile api'a istek at ve gelen veriyi data'ya aktar
+
   const songs = await api.getSearchMusics(query);
 
-  // Render the searched songs on the UI
+  // Aratılan şarkıları arayüze render et
+
   ui.renderCards(songs);
 });
 
-// ! Function to play the song when the play icon is clicked
+// ! Play ikonuna tıklanınca şarkı oynatma özelliği sağlayan fonksiyon
 
 ui.list.addEventListener("click", (e) => {
-  // If the play icon inside the list is clicked, play the song
+  // Liste alanı içerisindeki play ikonuna tıklandıysa müzik çal
   if (e.target.className == "play") {
-    // Access the card containing the play icon
+    // Play ikonunun kapsayıcısı olan card'a eriş
     const card = e.target.parentElement.parentElement;
 
-    // Access the data attributes assigned to the card [image, title, subtitle, mp3]
+    // Card'a atanan data özelliklerine [image,title,subtitle,mp3] eriş
     const songData = card.dataset;
 
-    // Dynamically render the player section
+    // Player alanını dinamik olarak renderla
     ui.renderPlayer(songData);
   }
 });

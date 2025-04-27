@@ -132,6 +132,7 @@ main section #list .card {
   flex-direction: column;
   gap: 10px;
   border-radius: 10px;
+  height: -moz-fit-content;
   height: fit-content;
 }
 main section #list .card:hover .play {
@@ -350,6 +351,4 @@ body {
   100% {
     background-color: transparent;
   }
-}
-
-/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */
