@@ -14,7 +14,7 @@ This project is a clone of a music streaming app similar to **Spotify**. The app
 
 - **HTML**: The structural components of the app. 🏗️
 - **CSS**: The visual design and styling of the app. 🎨
-- **SCSS**: SCSS is used for advanced styling and organization. 💅
+- **SCSS**: SCSS is used for advanced styling and organization. 🖌️
 - **JavaScript**: JavaScript powers the dynamic functionality of the app. 🖥️
 - **API Integration**: A music API is used to fetch song data. 🎧
 
