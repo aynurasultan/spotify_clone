@@ -24,4 +24,4 @@ The Spotify Clone app is fully responsive and provides an excellent experience a
 
 ## 🔍 Preview
 
-![Spotify Clone GIF](./images/spotify_clone.gif)
+![Spotify Clone GIF](./spotify_clone1.gif)

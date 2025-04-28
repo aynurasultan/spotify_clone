@@ -1,67 +1,63 @@
-// API classını import et
+// Import the API class
 import { API } from "./api.js";
-// UI classını import et
+// Import the UI class
 import { UI } from "./ui.js";
 
-// API Clasını kullanabilmek için bunun örneğini al
+// Create an instance of the API class to use it
 const api = new API();
 
-// UI classını kullanabilmek için bunun bir örneğini al
+// Create an instance of the UI class to use it
 const ui = new UI();
 
-// ! Sayfa yüklendiği an api isteği at
+// ! When the page loads, send an API request
 document.addEventListener("DOMContentLoaded", async () => {
-  // Loaderı render et
+  // Render the loader
   ui.renderLoader();
-  // Api'dan şarkı verilerini al ve data değişkenine ata
+  // Get song data from the API and assign it to the data variable
   const songs = await api.getPopular();
-  // Api'dan gelen veri ile cardları renderla
+  // Render the cards with the data received from the API
   ui.renderCards(songs);
 });
 
-// ! Form gönderildiğine inputtaki değere eriş ve api'dan inputtaki kelimeye ait şarkıları al
+// ! When the form is submitted, get the value from the input and get songs related to that word from the API
 ui.form.addEventListener("submit", async (e) => {
-  // Form gönderildiğinde sayfa yenilemesini engelle
+  // Prevent the page from refreshing when the form is submitted
   e.preventDefault();
-  // Form gönderildiğinde inputtaki değere eriş
+  // Get the value from the input when the form is submitted
   const query = e.target[0].value;
 
-  // Eğer query değeri yoksa api isteği atma
+  // If there is no query value, don't send the API request
   if (!query.trim()) {
-    alert("Lütfen geçerli bir arama işlemi gerçekleştiriniz!!");
+    alert("Please perform a valid search!!");
 
-    // Fonksiyonu durdur
+    // Stop the function
     return;
   }
 
-  // Loaderı render et
-
+  // Render the loader
   ui.renderLoader();
 
-  // Title'ı dinamik şekilde renderla
+  // Dynamically render the title
   ui.title.innerText = `Results for ${query}`;
 
-  // Form içerisinden elde edilen query değeri ile api'a istek at ve gelen veriyi data'ya aktar
-
+  // Send an API request with the query obtained from the form and get the data
   const songs = await api.getSearchMusics(query);
 
-  // Aratılan şarkıları arayüze render et
-
+  // Render the searched songs on the UI
   ui.renderCards(songs);
 });
 
-// ! Play ikonuna tıklanınca şarkı oynatma özelliği sağlayan fonksiyon
-
+// ! Function to play the song when the play icon is clicked
 ui.list.addEventListener("click", (e) => {
-  // Liste alanı içerisindeki play ikonuna tıklandıysa müzik çal
+  // If the play icon in the list area is clicked, play the music
   if (e.target.className == "play") {
-    // Play ikonunun kapsayıcısı olan card'a eriş
+    // Get the card containing the play icon
     const card = e.target.parentElement.parentElement;
 
-    // Card'a atanan data özelliklerine [image,title,subtitle,mp3] eriş
+    // Access the data attributes assigned to the card [image, title, subtitle, mp3]
     const songData = card.dataset;
 
-    // Player alanını dinamik olarak renderla
+    // Dynamically render the player section
     ui.renderPlayer(songData);
   }
 });
